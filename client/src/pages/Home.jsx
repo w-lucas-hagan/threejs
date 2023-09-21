@@ -11,7 +11,7 @@ import { CustomButton } from '../components'
 
 const Home = () => {
   // default values
-  const snap = useSnapshot(state); 
+  const snap = useSnapshot(state)
 
   return (
     <AnimatePresence>
