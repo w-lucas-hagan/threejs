@@ -6,37 +6,38 @@ import { useSnapshot } from 'valtio'
 import state from '../store'
 
 const CameraRig = ({ children }) => {
-  const group = useRef()
-  const snap = useSnapshot(state)
+  const group = useRef();
+  const snap = useSnapshot(state);
 
+  // executes code on every rendered frame 
   useFrame((state, delta) => {
-    const isBreakpoint = window.innerWidth <= 1260
-    const isMobile = window.innerWidth <= 600
 
-    // set the initial position of the model
-    // allows shirt to work on all different screen sizes
-    let targetPosition = [-0.4, 0, 2]
-    if(snap.intro){
-      if(isBreakpoint) targetPosition = [0, 0, 2]
-      if(isMobile) targetPosition = [0, 0.2, 2.5]
+    // set shirt size for all screen sizes 
+    const isBreakpoint = window.innerWidth <= 1260;
+    const isMobile = window.innerWidth <= 600;
+
+    // set the initial positino of the model 
+    let targetPosition = [-0.4, 0, 2];
+    if(snap.intro) {
+      if(isBreakpoint) targetPosition = [0, 0, 2];
+      if(isMobile) targetPosition = [0, 0.2, 2.5];
     }else{
-      if(isMobile) targetPosition = [0, 0, 2.5]
-      else targetPosition = [0, 0, 2]
+      if(isMobile) targetPosition = [0, 0, 2.5];
+      else targetPosition = [0, 0, 2];
     }
-
+    
     // set the model camera position
-    easing.damp3(state.camera.position, targetPosition, 0.25, delta)
+    easing.damp3(state.camera.position, targetPosition, 0.25, delta);
 
     // set the model rotation smoothly
     easing.dampE(
       group.current.rotation,
-      [state.pointer.y / 10, -state.pointer.x /5, 0],
+      [state.pointer.y / 10, -state.pointer.x / 5, 0],
       0.25,
       delta,
     )
   })
 
-  
 
   return <group ref={group}>{children}</group>
 }
