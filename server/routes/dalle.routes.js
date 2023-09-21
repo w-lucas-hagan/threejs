@@ -21,8 +21,9 @@ router.route('/').get((req, res) => {
 // router to pass prompt from front end to server
 router.route('/').post(async(req, res) => {
     try {
+        
         // get prompt from front end 
-        const { prompt } = req.body;
+        const { prompt } = req.body.value;
 
         // wait for server response (creation of image)
         const response = await openai.createImage({prompt, n: 1, size: '1024x1024', response_format: 'b64_json'})
@@ -31,7 +32,7 @@ router.route('/').post(async(req, res) => {
         const image = response.data.data[0].b64_json
 
         // send image to front end
-        res.status(200).json({ photo: image})
+        res.status(200).json({photo: image})
 
     } catch (error) {
         console.error(error)

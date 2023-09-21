@@ -42,7 +42,23 @@ const Customizer = () => {
     if(!prompt) return alert('Please enter a prompt!')
 
     try {
-      // call backend to generate an AI image
+      setGeneratingImg(true)
+      
+      // call to backend to generate an AI image
+      const response = await fetch('http://localhost:8080/api/v1/dalle', {
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application.json'
+        },
+        body: JSON.stringify({prompt})
+      })
+
+      // storing the response from the server in data variable
+      const data = await response.json()
+
+      // updating the shirt model
+      handleDecals(type, `data:image/png;base64,${data.photo}`)
+
     } catch (error) {
       alert(error)
     } finally {
