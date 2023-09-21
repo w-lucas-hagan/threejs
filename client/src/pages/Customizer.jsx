@@ -42,7 +42,7 @@ const Customizer = () => {
     if(!prompt) return alert('Please enter a prompt!')
 
     try {
-      // call our backend to generate an AI image
+      // call backend to generate an AI image
     } catch (error) {
       alert(error)
     } finally {
